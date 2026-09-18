@@ -1,0 +1,93 @@
+<!-- post-container -->
+<div class="post-container">
+    <div class="post-content single-post">
+        <h3>
+            <%= news.title %>
+        </h3>
+        <div class="post-information">
+            <span>
+                <i class="fa fa-tags" aria-hidden="true"></i>
+                <%= news.category.name %>
+            </span>
+            <span>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <a href='author.html'>
+                    <%= news.author.name %>
+                </a>
+            </span>
+            <span>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <%= new Date(news.timestamp).toLocaleDateString("en-GB") %>
+            </span>
+        </div>
+        <img class="single-feature-image" src="images/post_1.jpg" alt="" />
+        <p class="description">
+            <%- news.description %>
+        </p>
+    </div>
+</div>
+<!-- /post-container -->
+
+<!-- Comments Section -->
+<div class="comments-section mt-5">
+    <h3>Comments</h3>
+
+    <!-- Comment Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form action="/comment/<%= news._id %>" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Comment</label>
+                    <textarea class="form-control" name="content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Display Comments -->
+
+    <h3>Comments</h3>
+
+    <% if (comments.length> 0) { %>
+
+        <% comments.forEach((comment)=> { %>
+
+            <div class="comments-list">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <%= comment.name %>
+                        </h6>
+                        <p class="card-text">
+                            <%= comment.content %>
+                        </p>
+                        <small class="text-muted">Posted on <%= new Date(comment.timestamp).toLocaleDateString() %>
+                                </small>
+                    </div>
+                </div>
+            </div>
+
+            <% }) %>
+
+                <% } else { %>
+                    <div class="comments-list">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <p>No approved comments yet.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <% } %>
+
+</div>
